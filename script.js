@@ -1,18 +1,27 @@
 const squareContainer = document.querySelector("#squareContainer");
+squareContainer.style.height = "800px";
+squareContainer.style.width = "800px";
 
-for (let i = 1; i <= 16; i++) {
-    const row = document.createElement("div");
-    row.className = `column`
-    row.id = `col${i}`
-    squareContainer.appendChild(row);
-    for (let j = 1; j <= 16; j++) {
-        const div = document.createElement("div");
-        let count = ((i-1) * 16) + j;
-        div.className = `square`;
-        div.id = `sqr${count}`;
-        row.appendChild(div);
+let gridSize = 16;
+
+function drawGrid(gridSize) {
+    for (let i = 1; i <= gridSize**2; i++) {
+        let div = document.createElement("div");
+        div.className = "square";
+        div.style.height = `${squareContainer.clientHeight / gridSize}px`
+        div.style.width = `${squareContainer.clientWidth / gridSize}px`
+        squareContainer.appendChild(div);
     }
 }
+
+function deleteGrid() {
+    const allSquares = document.querySelectorAll(".square");
+    allSquares.forEach(element => {
+        element.remove();
+    });
+}
+
+drawGrid(gridSize);
 
 squareContainer.addEventListener('mouseover', (e) => {
     if (e.target.className === 'square') {
@@ -24,4 +33,16 @@ squareContainer.addEventListener('mouseout', (e) => {
     if (e.target.className === "square") {
         e.target.style.backgroundColor = "";
     }
+})
+
+const btn = document.getElementById("gridSizeBtn");
+btn.addEventListener('click', (e) => {
+    const input = document.getElementById("gridSizeText");
+    gridSize = input.value;
+    if (gridSize > 100) {
+        alert("No more than 100!");
+        return;
+    };
+    deleteGrid();
+    drawGrid(gridSize);
 })

@@ -1,9 +1,11 @@
 .square {
     width: 5vh;
     height: 5vh;
+    box-sizing: border-box;
     border: 1px solid black;
 }
 
 #squareContainer {
     display: flex;
+    flex-wrap: wrap;
 }
